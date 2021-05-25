@@ -1,0 +1,13 @@
+on: [pull_request]
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    container: archlinux/archlinux:latest
+    steps:
+      - name: Install dependencies
+        run: pacman -Syu --noconfirm make mill z3
+      - uses: actions/checkout@v2
+      - name: Check Format
+        run: make checkformat
+      - name: Test
+        run: make test
