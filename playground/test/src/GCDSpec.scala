@@ -1,5 +1,5 @@
 import chisel3._
-import chisel3.tester._
+import chiseltest._
 import chisel3.experimental.BundleLiterals._
 
 import utest._
