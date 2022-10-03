@@ -1,5 +1,7 @@
 BUILD_DIR = ./build
 
+export PATH := $(PATH):$(abspath ./utils)
+
 test:
 	mill -i __.test
 

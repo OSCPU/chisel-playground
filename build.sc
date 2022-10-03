@@ -17,6 +17,7 @@ object playground extends ScalaModule with ScalafmtModule { m =>
   )
   override def ivyDeps = Agg(
     ivy"edu.berkeley.cs::chisel3:3.5.4",
+    ivy"com.sifive::chisel-circt:0.6.0",
   )
   override def scalacPluginIvyDeps = Agg(
     ivy"edu.berkeley.cs:::chisel3-plugin:3.5.4",

@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+firtool.elf.strip --disable-annotation-unknown $@
