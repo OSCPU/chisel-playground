@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-firtool.elf.strip --disable-annotation-unknown $@
+firtool.elf.strip --disable-annotation-unknown --lowering-options=disallowLocalVariables,disallowPackedArrays,locationInfoStyle=wrapInAtSquareBracket $@
