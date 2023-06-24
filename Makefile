@@ -2,12 +2,14 @@ BUILD_DIR = ./build
 
 export PATH := $(PATH):$(abspath ./utils)
 
+$(BUILD_DIR):
+	mkdir -p $@
+
 test:
 	mill -i __.test
 
-verilog:
+verilog: $(BUILD_DIR)
 	$(call git_commit, "generate verilog")
-	mkdir -p $(BUILD_DIR)
 	mill -i __.test.runMain Elaborate -td $(BUILD_DIR)
 
 help:
