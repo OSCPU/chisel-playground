@@ -21,3 +21,5 @@ out/
 .idea/
 .idea_modules/
 test_run_dir/
+
+!build.sh
