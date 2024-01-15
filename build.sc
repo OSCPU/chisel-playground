@@ -29,7 +29,7 @@ object playground extends SbtModule with ScalafmtModule { m =>
     if (useChisel3) ivy"edu.berkeley.cs:::chisel3-plugin:3.6.0" else
     ivy"org.chipsalliance:::chisel-plugin:7.0.0-M1"
   )
-  object test extends SbtModuleTests with TestModule.ScalaTest {
+  object test extends SbtModuleTests with TestModule.ScalaTest with ScalafmtModule {
     override def sources = T.sources {
       super.sources() ++ Seq(PathRef(millSourcePath / "test"))
     }
