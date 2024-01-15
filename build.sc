@@ -23,7 +23,7 @@ object playground extends ScalaModule with ScalafmtModule { m =>
     if (useChisel5) ivy"org.chipsalliance:::chisel-plugin:5.0.0" else
     ivy"edu.berkeley.cs:::chisel3-plugin:3.6.0",
   )
-  object test extends Tests with Utest {
+  object test extends Tests with Utest with ScalafmtModule {
     override def ivyDeps = m.ivyDeps() ++ Agg(
       ivy"com.lihaoyi::utest:0.8.1",
       if (useChisel5) ivy"edu.berkeley.cs::chiseltest:5.0-SNAPSHOT" else
