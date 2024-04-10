@@ -1,47 +1,66 @@
-import chisel3._
-import chiseltest._
-import chisel3.experimental.BundleLiterals._
+// See README.md for license details.
 
-import utest._
+package gcd
+
+import chisel3._
+import chisel3.experimental.BundleLiterals._
+import chisel3.simulator.EphemeralSimulator._
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.must.Matchers
 
 /**
   * This is a trivial example of how to run this Specification
   * From within sbt use:
   * {{{
-  * testOnly gcd.GcdDecoupledTester
+  * testOnly gcd.GCDSpec
   * }}}
   * From a terminal shell use:
   * {{{
-  * sbt 'testOnly gcd.GcdDecoupledTester'
+  * sbt 'testOnly gcd.GCDSpec'
+  * }}}
+  * Testing from mill:
+  * {{{
+  * mill %NAME%.test.testOnly gcd.GCDSpec
   * }}}
   */
-object GCDSpec extends ChiselUtestTester {
-  val tests = Tests {
-    test("GCD") {
-      testCircuit(new DecoupledGcd(16)) {
-        dut =>
-          dut.input.initSource()
-          dut.input.setSourceClock(dut.clock)
-          dut.output.initSink()
-          dut.output.setSinkClock(dut.clock)
-          val testValues = for {x <- 0 to 10; y <- 0 to 10} yield (x, y)
-          val inputSeq = testValues.map { case (x, y) => (new GcdInputBundle(16)).Lit(_.value1 -> x.U, _.value2 -> y.U) }
-          val resultSeq = testValues.map { case (x, y) =>
-            (new GcdOutputBundle(16)).Lit(_.value1 -> x.U, _.value2 -> y.U, _.gcd -> BigInt(x).gcd(BigInt(y)).U)
+class GCDSpec extends AnyFreeSpec with Matchers {
+  "Gcd should calculate proper greatest common denominator" in {
+    simulate(new DecoupledGcd(16)) { dut =>
+      val testValues = for { x <- 0 to 10; y <- 0 to 10} yield (x, y)
+      val inputSeq = testValues.map { case (x, y) => (new GcdInputBundle(16)).Lit(_.value1 -> x.U, _.value2 -> y.U) }
+      val resultSeq = testValues.map { case (x, y) =>
+        (new GcdOutputBundle(16)).Lit(_.value1 -> x.U, _.value2 -> y.U, _.gcd -> BigInt(x).gcd(BigInt(y)).U)
+      }
+
+      dut.reset.poke(true.B)
+      dut.clock.step()
+      dut.reset.poke(false.B)
+      dut.clock.step()
+
+      var sent, received, cycles: Int = 0
+      while (sent != 100 && received != 100) {
+        assert(cycles <= 1000, "timeout reached")
+
+        if (sent < 100) {
+          dut.input.valid.poke(true.B)
+          dut.input.bits.value1.poke(testValues(sent)._1.U)
+          dut.input.bits.value2.poke(testValues(sent)._2.U)
+          if (dut.input.ready.peek().litToBoolean) {
+            sent += 1
           }
-          fork {
-            // push inputs into the calculator, stall for 11 cycles one third of the way
-            val (seq1, seq2) = inputSeq.splitAt(resultSeq.length / 3)
-            dut.input.enqueueSeq(seq1)
-            dut.clock.step(11)
-            dut.input.enqueueSeq(seq2)
-          }.fork {
-            // retrieve computations from the calculator, stall for 10 cycles one half of the way
-            val (seq1, seq2) = resultSeq.splitAt(resultSeq.length / 2)
-            dut.output.expectDequeueSeq(seq1)
-            dut.clock.step(10)
-            dut.output.expectDequeueSeq(seq2)
-          }.join()
+        }
+
+        if (received < 100) {
+          dut.output.ready.poke(true.B)
+          if (dut.output.valid.peekValue().asBigInt == 1) {
+            dut.output.bits.gcd.expect(BigInt(testValues(received)._1).gcd(testValues(received)._2))
+            received += 1
+          }
+        }
+
+        // Step the simulation forward.
+        dut.clock.step()
+        cycles += 1
       }
     }
   }
