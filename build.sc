@@ -23,11 +23,11 @@ object playground extends SbtModule with ScalafmtModule { m =>
   }
   override def ivyDeps = Agg(
     if (useChisel3) ivy"edu.berkeley.cs::chisel3:3.6.0" else
-    ivy"org.chipsalliance::chisel:7.0.0-M1"
+    ivy"org.chipsalliance::chisel:6.2.0"
   )
   override def scalacPluginIvyDeps = Agg(
     if (useChisel3) ivy"edu.berkeley.cs:::chisel3-plugin:3.6.0" else
-    ivy"org.chipsalliance:::chisel-plugin:7.0.0-M1"
+    ivy"org.chipsalliance:::chisel-plugin:6.2.0"
   )
   object test extends SbtModuleTests with TestModule.ScalaTest with ScalafmtModule {
     override def sources = T.sources {
