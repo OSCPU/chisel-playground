@@ -31,7 +31,7 @@ object playground extends SbtModule with ScalafmtModule { m =>
   )
   object test extends SbtModuleTests with TestModule.ScalaTest with ScalafmtModule {
     override def sources = T.sources {
-      super.sources() ++ Seq(PathRef(millSourcePath / "test"))
+      super.sources() ++ Seq(PathRef(this.millSourcePath / "test"))
     }
     override def ivyDeps = super.ivyDeps() ++ Agg(
       if (useChisel3) ivy"edu.berkeley.cs::chiseltest:0.6.0" else
