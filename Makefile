@@ -19,6 +19,12 @@ reformat:
 checkformat:
 	mill -i __.checkFormat
 
+bsp:
+	mill -i mill.bsp.BSP/install
+
+idea:
+	mill -i mill.idea.GenIdea/idea
+
 clean:
 	-rm -rf $(BUILD_DIR)
 
