@@ -9,7 +9,7 @@ import mill.scalalib._
 import mill.bsp._
 
 object playground extends ScalaModule with ScalafmtModule { m =>
-  override def scalaVersion = "2.13.14"
+  override def scalaVersion = "2.13.15"
 
   override def scalacOptions = Seq(
     "-language:reflectiveCalls",
@@ -18,8 +18,8 @@ object playground extends ScalaModule with ScalafmtModule { m =>
     "-Xcheckinit"
   )
 
-  override def ivyDeps             = Agg(ivy"org.chipsalliance::chisel:6.4.0")
-  override def scalacPluginIvyDeps = Agg(ivy"org.chipsalliance:::chisel-plugin:6.4.0")
+  override def ivyDeps             = Agg(ivy"org.chipsalliance::chisel:6.6.0")
+  override def scalacPluginIvyDeps = Agg(ivy"org.chipsalliance:::chisel-plugin:6.6.0")
 
   object test extends ScalaTests with TestModule.ScalaTest with ScalafmtModule {
     override def ivyDeps = m.ivyDeps() ++ Agg(
