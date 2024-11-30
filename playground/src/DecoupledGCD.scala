@@ -14,12 +14,9 @@ class GcdOutputBundle(val w: Int) extends Bundle {
   val gcd    = UInt(w.W)
 }
 
-/**
-  * Compute Gcd using subtraction method.
-  * Subtracts the smaller from the larger until register y is zero.
-  * value input register x is then the Gcd.
-  * Unless first input is zero then the Gcd is y.
-  * Can handle stalls on the producer or consumer side
+/** Compute Gcd using subtraction method. Subtracts the smaller from the larger until register y is zero. value input
+  * register x is then the Gcd. Unless first input is zero then the Gcd is y. Can handle stalls on the producer or
+  * consumer side
   */
 class DecoupledGcd(width: Int) extends Module {
   val input  = IO(Flipped(Decoupled(new GcdInputBundle(width))))
