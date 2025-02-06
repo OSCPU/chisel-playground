@@ -1,13 +1,38 @@
-on: [pull_request]
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+      - labeled
 jobs:
-  checks:
+  build-and-test:
+    name: "Build and Test"
     runs-on: ubuntu-latest
-    container: archlinux/archlinux:latest
     steps:
+      - uses: cachix/install-nix-action@v27
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
       - name: Install dependencies
-        run: pacman -Syu --noconfirm make mill z3
-      - uses: actions/checkout@v2
-      - name: Check Format
-        run: make checkformat
+        run: nix-env -i mill verilator z3 -f '<nixpkgs>'
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
       - name: Test
         run: make test
+
+  check-format:
+    name: "Check Format"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: cachix/install-nix-action@v27
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+      - name: Install dependencies
+        run: nix-env -i mill -f '<nixpkgs>'
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Test
+        run: make checkformat
