@@ -10,11 +10,12 @@
 !*.cc
 !.gitignore
 !.scalafmt.conf
-!build.sc
 !README.md
 build/
 
 # mill
+!*.mill
+!.mill-version
 out/
 .bsp/
 .idea/

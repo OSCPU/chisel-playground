@@ -1,3 +1,5 @@
+package build
+
 // import Mill dependency
 import mill._
 import mill.define.Sources
@@ -29,7 +31,7 @@ object playground extends ScalaModule with ScalafmtModule { m =>
     )
   }
 
-  def repositoriesTask = T.task {
+  def repositoriesTask = Task.Anon {
     Seq(
       coursier.MavenRepository("https://repo.scala-sbt.org/scalasbt/maven-releases"),
       coursier.MavenRepository("https://oss.sonatype.org/content/repositories/releases"),
