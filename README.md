@@ -7,7 +7,7 @@ mill is another Scala/Java build tool without obscure DSL like SBT. It is much f
 Contents at a glance:
 
 * `.gitignore` - helps Git ignore junk like generated files, build products, and temporary files.
-* `build.sc` - instructs mill to build the Chisel project
+* `build.mill` - instructs mill to build the Chisel project
 * `Makefile` - rules to call mill
 * `playground/src/GCD.scala` - GCD source file
 * `playground/src/DecoupledGCD.scala` - another GCD source file
