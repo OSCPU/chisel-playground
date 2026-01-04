@@ -1,17 +1,15 @@
 BUILD_DIR = ./build
 
-PRJ = playground
-
 test:
-	mill -i $(PRJ).test
+	mill -i test
 
 verilog:
 	$(call git_commit, "generate verilog")
 	mkdir -p $(BUILD_DIR)
-	mill -i $(PRJ).runMain Elaborate --target-dir $(BUILD_DIR)
+	mill -i runMain Elaborate --target-dir $(BUILD_DIR)
 
 help:
-	mill -i $(PRJ).runMain Elaborate --help
+	mill -i runMain Elaborate --help
 
 reformat:
 	mill -i __.reformat
