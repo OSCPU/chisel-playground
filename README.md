@@ -9,12 +9,12 @@ Contents at a glance:
 * `.gitignore` - helps Git ignore junk like generated files, build products, and temporary files.
 * `build.mill` - instructs mill to build the Chisel project
 * `Makefile` - rules to call mill
-* `playground/src/GCD.scala` - GCD source file
-* `playground/src/DecoupledGCD.scala` - another GCD source file
-* `playground/src/Elaborate.scala` - wrapper file to call chisel command with the GCD module
-* `playground/test/src/GCDSpec.scala` - GCD tester
+* `src/GCD.scala` - GCD source file
+* `src/DecoupledGCD.scala` - another GCD source file
+* `src/Elaborate.scala` - wrapper file to call chisel command with the GCD module
+* `test/src/GCDSpec.scala` - GCD tester
 
-Feel free to rename or delete files under `playground/` or use them as a reference/template.
+Feel free to rename or delete files under `src/` and `test/` or use them as a reference/template.
 
 ## Getting Started
 
