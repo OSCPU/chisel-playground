@@ -23,8 +23,6 @@ object `package` extends ScalaModule with ScalafmtModule { m =>
   object test extends ScalaTests with TestModule.ScalaTest with ScalafmtModule {
     override def mvnDeps = m.mvnDeps() ++ Seq(
       mvn"org.scalatest::scalatest::3.2.19",
-      // for formal flow in future
-      mvn"edu.berkeley.cs::chiseltest:6.0.0"
     )
   }
 }
