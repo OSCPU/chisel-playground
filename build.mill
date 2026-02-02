@@ -1,4 +1,4 @@
-//| mill-version: 1.0.6
+//| mill-version: 1.1.0
 
 package build
 
@@ -17,8 +17,8 @@ object `package` extends ScalaModule with ScalafmtModule { m =>
     "-Xcheckinit"
   )
 
-  override def mvnDeps             = Seq(mvn"org.chipsalliance::chisel:7.6.0")
-  override def scalacPluginMvnDeps = Seq(mvn"org.chipsalliance:::chisel-plugin:7.6.0")
+  override def mvnDeps             = Seq(mvn"org.chipsalliance::chisel:7.7.0")
+  override def scalacPluginMvnDeps = Seq(mvn"org.chipsalliance:::chisel-plugin:7.7.0")
 
   object test extends ScalaTests with TestModule.ScalaTest with ScalafmtModule {
     override def mvnDeps = m.mvnDeps() ++ Seq(
